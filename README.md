@@ -22,3 +22,16 @@ Suppose that the requested track width is `w` but the actual width is `w + x`. T
 
 The model created by this file will help you determine `x`sothat you can correct for it in either your mode definition or in the slicer software.
 ### Measuring the track width
+The `TrackWidthCalibration.scad` file creates a 3D model that consists of two objects.
+- A bar with (square) holes in it. Each hole differs `0.1mm` in width from its neighboures.
+- A peg with a width (in the Y-direction!) of `5mm` which is the *design width*.
+
+The holes in the bar have a number printed above them. These indicate how much wider (or smaller) the hole is. The hole marked with `0` has exactly the design width (`5mm`). The hole marked with `3`has a width of `5 + 3*0.1` and in general a hole marked with `N`has a width of `5 + N * 0.1`. Note that `N` can also be negative, meaning that the width is smaller than the design width. The peg has a width of `5mm`and so it will fit snugly in the whole marked with `0`.
+
+Now lets look at the scenario where `x`is not zero, so the track width deviates from the setup width. The peg now has a width of `5 + x mm` (remember that each of the two sides are `0.5x`wider!). Each of the holes in the bar have a width of `5 + 0.1 N - x mm`. If the peg fits in the hole marked with `N` then we know that `5 + 0.1 N - x = 5 + x` or `x = 0.05N`.
+### Using the calibrator
+- Set the slicer software to its default settings
+- Print the model
+- Try to put the peg in one of the holes, selecting the hole where the peg *just* fits. Note keep the text on the pegtowards you (if the numbers on the bar are awy from you). 
+- Calculate the width of the deposited filament with`x = 0.05N`.
+
